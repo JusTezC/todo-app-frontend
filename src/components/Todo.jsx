@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import Button from './common/button'
+import Button from './common/Button.jsx'
 
 function Todo({ todo, handleEditTodo, handleDeleteTodo }) {
     const [isEditing, setIsEditing] = useState(false)
