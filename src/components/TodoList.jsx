@@ -12,7 +12,8 @@ function TodoList() {
     useEffect(()=>{
         async function getAllTodos(){  //function makes the call to the API` AXIOS IS A FETCH
             try {
-                const response = await axios.get('http://localhost:3000/api/todo/get-all-todos') // making a request as we were in postman
+                const response = await axios.get(
+                    `${import.meta.env.DEV ? 'http://localhost:3000' : ''}/api/todo/get-all-todos`) // making a request as we were in postman
                 setTodoList(response.data.payload)
             } catch (error) {
                 console.log(error)
@@ -36,7 +37,7 @@ function TodoList() {
     async function handleEditTodo(id, updateObj) {
        try {
         console.log(updateObj)
-            const response = await axios.put(`http://localhost:3000/api/todo/update-todo/${id}`, updateObj)
+            const response = await axios.put(`${import.meta.env.DEV ? 'http://localhost:3000' : ''}/api/todo/update-todo/${id}`, updateObj)
             console.log(response.data)
             const newList = todoList.map(item => { //loop through array
                 if(item._id === id){ //if we arrive at an object with the matching id,
@@ -51,9 +52,9 @@ function TodoList() {
     }
 
     // after the => it automatically return, whenever it returns true it stays in the list if it returns false it get removes from the list
-   async function handleDeleteTodo(id) {
+   async function handleDeleteTodo(id, deleteObj) {
     try{
-        const response = await axios.delete(`http://localhost:3000/api/todo/delete-todo/${id}`)
+         await axios.delete(`${import.meta.env.DEV ? 'http://localhost:3000' : ''}/todo/delete-todo/${id}`, deleteObj)
         const newList = todoList.filter(item => item._id !== id)
         setTodoList(newList)
     }catch(error){
@@ -68,7 +69,7 @@ async function addTodo(event) {
     if (textInput === '') {
         return
     }
-    const response = await axios.post('http://localhost:3000/api/todo/create-todo', {text: textInput})
+    const response = await axios.post(`${import.meta.env.DEV ? 'http://localhost:3000' : ''}/api/todo/create-todo`, {text: textInput})
     setTodoList([...todoList, response.data.payload])  //instead of pushing use the spread operator-- this is how we .push to change a state--the new .push
     setTextInput('')
 } catch (error){
