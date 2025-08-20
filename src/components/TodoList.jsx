@@ -54,7 +54,7 @@ function TodoList() {
     // after the => it automatically return, whenever it returns true it stays in the list if it returns false it get removes from the list
    async function handleDeleteTodo(id, deleteObj) {
     try{
-         await axios.delete(`${import.meta.env.DEV ? 'http://localhost:3000' : ''}/todo/delete-todo/${id}`, deleteObj)
+         await axios.delete(`${import.meta.env.DEV ? 'http://localhost:3000' : ''}/api/todo/delete-todo/${id}`, deleteObj)
         const newList = todoList.filter(item => item._id !== id)
         setTodoList(newList)
     }catch(error){
